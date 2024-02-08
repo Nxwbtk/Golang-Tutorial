@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// Ref https://www.youtube.com/watch?v=m1Uy0WQ2Xns&list=PL4cUxeGkcC9gC88BEo9czgyS72A3doDeM&index=4
+
 func main() {
 	// How to print
 	fmt.Println("Hello World")
