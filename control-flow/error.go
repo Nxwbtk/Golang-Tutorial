@@ -12,19 +12,18 @@ func divide(a int, b int) (int, error) {
 	return a / b, nil
 }
 
-type Login struct {
+type LoginError struct {
 	uname string
-	pass string
 	msg string
 }
 
-func (e *Login) Error() string {
+func (e *LoginError) Error() string {
 	return fmt.Sprintf("Login Error")
 }
 
 func login(uname, pass string) error {
 	if (uname == "" || pass == "") {
-		return &Login{uname: uname, msg: "Invalid"}
+		return &LoginError{uname: uname, msg: "Invalid"}
 	}
 	return errors.New("No Still no")
 }
@@ -33,10 +32,10 @@ func login(uname, pass string) error {
 func main () {
 	// fmt.Println(divide(10, 2))
 	// fmt.Println(divide(10, 0))
-	err := login("asdsad", "dsadsa")
+	err := login("", "")
 	if (err != nil) {
 		switch e := err.(type) {
-		case *Login:
+		case *LoginError:
 			fmt.Println("Error", e.msg)
 		default:
 			fmt.Println(e)
