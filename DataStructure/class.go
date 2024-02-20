@@ -33,6 +33,7 @@ func (std Student) setLastName(lastName string) {
 func main() {
 	fmt.Println(getValue())
 	var std Student
+	// cannot set because must use pointer
 	std.setFirstName("John")
 	std.setLastName("Doe")
 	fmt.Printf("Student name = %s %s\n", std.getFirstName(), std.getLastName())
