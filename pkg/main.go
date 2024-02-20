@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"test/mypkg"
+	// "test/mypkg/internal/myinternal" cannot call internal package
 )
 
 // path of package can copy from go.mod file and add /package-folder-name

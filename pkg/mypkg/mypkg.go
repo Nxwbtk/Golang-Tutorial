@@ -2,6 +2,7 @@ package mypkg
 
 import (
 	"fmt"
+	"test/mypkg/internal/myinternal"
 )
 
 // public function must start with capital letter
@@ -15,4 +16,5 @@ func SayHello() {
 // but you can call private function from public function
 func sayPV() {
 	fmt.Println("Hello, From PV!")
+	myinternal.SayInternal()
 }
