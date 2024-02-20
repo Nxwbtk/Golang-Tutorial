@@ -12,4 +12,5 @@ import (
 func main() {
 	fmt.Println("Hello")
 	mypkg.SayHello()
+	// mypkg.sayPV() // cannot call private function
 }
