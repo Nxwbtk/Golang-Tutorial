@@ -4,12 +4,19 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 // https://youtu.be/nfSbFk8y4D0?si=nrHMvbt6BXB8rorp&t=773
 // run by nodemon --exec go run main.go route.go --signal SIGTERM
 func main() {
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*", // Adjust this to be more restrictive if needed
+		AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	for i := 0 ; i < 10 ; i++ {
 		books = append(books, Book{ ID: len(books) + 1, Title: "Book #" + strconv.Itoa(len(books) + 1), Author: "New" })
