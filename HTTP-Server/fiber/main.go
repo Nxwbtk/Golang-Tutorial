@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-// https://youtu.be/nfSbFk8y4D0?si=nrHMvbt6BXB8rorp&t=773
+// https://youtu.be/nfSbFk8y4D0?si=o15wvw5ClJXPSgMI&t=2824
 // run by nodemon --exec go run main.go route.go --signal SIGTERM
 func main() {
 	app := fiber.New()
