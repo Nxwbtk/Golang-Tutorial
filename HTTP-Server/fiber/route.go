@@ -1,9 +1,12 @@
 package main
 
 import (
+	"os"
 	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type Book struct {
@@ -80,4 +83,50 @@ func deleteBook(c *fiber.Ctx) error {
 		}
 	}
 	return c.Status(fiber.StatusNotFound).SendString("Not found")
+}
+
+// use with form-data and key is "image"
+func uploadFile(c *fiber.Ctx) error {
+	file, err := c.FormFile("image")
+	if (err != nil) {
+		return c.Status(fiber.StatusBadRequest).SendString((err.Error()))
+	}
+	err = c.SaveFile(file, "./uploads/" + file.Filename)
+	if (err != nil) {
+		return c.Status(fiber.StatusInternalServerError).SendString((err.Error()))
+	}
+	return c.SendString("File uploaded")
+}
+
+type Users struct {
+	Email string `json:"email"`
+	Password string `json:"password"`
+}
+
+var user = Users{
+	Email: "a@a.com",
+	Password: "123",
+}
+
+func logIn(c *fiber.Ctx) error {
+	usr := new(Users)
+	err := c.BodyParser(usr)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Body incorrect")
+	}
+	if user.Email != usr.Email || user.Password != usr.Password {
+		return fiber.ErrUnauthorized
+	}
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["email"] = usr.Email
+	claims["role"] = "admin"
+	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	t, err := token.SignedString([]byte(os.Getenv("JWT_SECRET_ENV")))
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+	return c.JSON(fiber.Map{
+		"token": t,
+	})
 }
